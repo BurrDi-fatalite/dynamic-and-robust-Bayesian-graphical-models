@@ -1,8 +1,8 @@
 %% Generate classical-t data for 25 iterations
 %% Parameters
 p = 20; % number of variables
-S_true = 3; % number of hidden states
-T = S_true*250;  % length of the time series
+S_true = 1; % number of hidden states
+T = S_true*100;  % length of the time series
 rng(12345, 'twister');
 
 nblock=15;  % divide the time series equally into nblock number of blocks
@@ -94,10 +94,15 @@ for rep = 1:nrep
     end
     
    %% Transform MVN data to Classical t-distribution data
+    noiseToAdd = normrnd(p, 100, [sum(states_true == 1), p]);
+    TC(states_true == 1, :) = TC(states_true == 1, :) + noiseToAdd; % 添加噪声
     tau_t_true = gamrnd(nu_true/2, 2/nu_true, [T, 1]);
     TC_new = TC ./ sqrt(tau_t_true);
     TC = TC_new;
 
+    
+    
+    
     %% Save data
     data.TC=TC;
     data.S_true=S_true;

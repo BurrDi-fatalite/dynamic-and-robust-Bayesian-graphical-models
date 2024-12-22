@@ -138,7 +138,7 @@ for iter = 1: burnin + nmc
             
             ind_noi = ind_noi_all(:, i);
             omega_22 = C_temp(i, i);
-            omega_12 = C_temp(ind_noi, i);
+            omega_12  = C_temp(ind_noi, i);
             mu_c = - 1/omega_22 * omega_12' * yNorm_tau_temp(ind_noi);
             sigma_c_square = 1/ omega_22;
 

@@ -10,7 +10,7 @@ mkdir('Simulation_analysis') % save model performance results
 %%%%%%%%%%%%%%%%%
 %% Generate data and plot data
 %%%%%%%%%%%%%%%%%
-Generate_and_plot_data
+% Generate_and_plot_data
 % data are saved in the Synthetic_data folder
 % plots of the data are saved in the Simulation_analysis folder
 
@@ -25,7 +25,7 @@ data_method_list = ["cmthmm"; "5spikeshmm";"10spikeshmm"] ;
 % 10spikeshmm: highly contaminated data
 data_method = data_method_list(3);
 % Load 
-rep = 25; % select a replication from 25 replications
+rep = 1; % select a replication from 25 replications
 data = load(strcat('Synthetic_data/Synthetic_data_', data_method, '_rep_', num2str(rep)));
 data = data.data;
 
@@ -37,7 +37,7 @@ model_method_list = ["LPMHMM", "CMTHMM", "TDTHMM"];
 model_method = model_method_list(3);
 
 %%% Set up parameters
-S = 3; % number of hidden states
+S = 1; % number of hidden states
 v0 = 0.02^2; % v0^2 in the continuous spike and slab prior  
 h = 50^2; 
 v1 = h * v0; % v1^2 in the continuous spike and slab prior  
@@ -90,7 +90,7 @@ save(strcat('Simulation_results/sim_results_',data_method,'_',model_method,'4sta
 %%%%%%%%%%%%%%%%
 %% Load data and results
 % Load data
-rep = 25; 
+rep = 1; 
 data_method_list = ["cmthmm"; "5spikeshmm";"10spikeshmm"] ;
 data_method = data_method_list(3);
 data = load(strcat('Synthetic_data/Synthetic_data_', data_method, '_rep_', num2str(rep)));

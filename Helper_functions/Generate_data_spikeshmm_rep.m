@@ -1,8 +1,8 @@
 %% Generate contaminated data with random outliers for 25 iterations
 %% Parameters
 p = 20; % number of variables
-S_true = 3; % number of hidden states
-T = S_true*250;  % length of the time series
+S_true = 1; % number of hidden states
+T = S_true*100;  % length of the time series
 rng(12345, 'twister');
 
 nblock=15;  % divide the time series equally into nblock number of blocks
@@ -96,13 +96,20 @@ for rep = 1:nrep
 
     %% Add spikes
     TC_new=TC;
-    for s=1:S_true
-        var_temp= randi([1 p],1,p);  % randomly select some variables to add spike
-        for i=var_temp
-            time_temp=randi([1 T],1,nspikes); % randomly add nspikes number of spikes to each variable
-            TC_new(time_temp,i)=TC_new(time_temp,i)+normrnd(0, spikescale, nspikes, 1);
-        end
-    end
+    k = 1; % 对状态 k=1 进行操作
+    % 获取状态为 k 的所有时间点索引
+    time_indices = find(states_true == k);
+    noiseToAdd = normrnd(p, 100, [round(0.1 * length(time_indices)), p]);
+    time_temp = datasample(time_indices, round(0.1 * length(time_indices)), 'Replace', false);
+    TC_new(time_temp, :) = TC_new(time_temp, :) + noiseToAdd;
+    
+%     for s=1:S_true
+%         var_temp= randi([1 p],1,p);  % randomly select some variables to add spike
+%         for i=var_temp
+%             time_temp=randi([1 T],1,nspikes); % randomly add nspikes number of spikes to each variable
+%             TC_new(time_temp,i)=TC_new(time_temp,i)+normrnd(0, spikescale, nspikes, 1);
+%         end
+%     end
     TC=TC_new;
 
     %% Save data

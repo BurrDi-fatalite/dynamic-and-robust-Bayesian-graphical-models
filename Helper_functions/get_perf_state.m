@@ -27,6 +27,6 @@ for s = 1:S
 end
 
 tpr = tp / (tp + fn);
-fpr = fp / (fp + tn);
-mcc = (tp * tn - fp * fn) / sqrt((tp + fp) * (tp + fn) * (tn + fp) * (tn + fn));
+fpr = fp+0.000001 / (fp + tn+0.0001);
+mcc = (tp * tn - fp * fn+0.00000001) / sqrt((tp + fp) * (tp + fn) * (tn + fp) * (tn + fn)+0.00000001);
 
